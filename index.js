@@ -4,11 +4,18 @@ require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 8080;
-//servir contenido estatico
+
+console.log("Views directory:", __dirname + "/views");
+
+// Configuración de Handlebars y vistas
 app.set("view engine", "hbs");
+app.set("views", __dirname + "/views");
 hbs.registerPartials(__dirname + "/views/partials");
 
+// Servir contenido estático
 app.use(express.static("public"));
+
+// Rutas
 app.get("/", function (req, res) {
   res.render("home", {
     title: "Home Page",
@@ -35,6 +42,7 @@ app.get("/elements", function (req, res) {
     },
   });
 });
+
 app.get("*", function (req, res) {
   res.sendFile(__dirname + "/public/404 page.html");
 });
